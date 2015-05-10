@@ -7,7 +7,7 @@ sealed trait Coin extends Any {
 }
 object Coin extends (Int => Coin) {
   def apply(n: Int): Coin = CoinImpl(n max 0)
-  private final case class CoinImpl(value: Int) extends Coin {
+  private final case class CoinImpl(value: Int) extends AnyVal with Coin {
     def +(c: Coin) = Coin(value + c.value)
     def -(c: Coin) = Coin(value - c.value)
   }
