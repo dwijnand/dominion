@@ -16,6 +16,22 @@ case class IntWithCoin(private val n: Int) extends AnyVal {
   def coin = Coin(n)
 }
 
+sealed trait Vp extends Any {
+  def value: Int
+  def +(c: Vp): Vp
+  def -(c: Vp): Vp
+}
+object Vp extends (Int => Vp) {
+  def apply(n: Int): Vp = VpImpl(n max 0)
+  private final case class VpImpl(value: Int) extends AnyVal with Vp {
+    def +(vp: Vp) = Vp(value + vp.value)
+    def -(vp: Vp) = Vp(value - vp.value)
+  }
+}
+case class IntWithVp(private val n: Int) extends AnyVal {
+  def vp = Vp(n)
+}
+
 trait Card {
   def cost: Coin
 }

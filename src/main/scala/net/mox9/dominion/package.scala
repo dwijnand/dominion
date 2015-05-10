@@ -18,4 +18,5 @@ package object dominion {
   implicit def anyW[A](x: A): AnyW[A] = new AnyW(x)
 
   implicit def intWithCoin(n: Int): IntWithCoin = new IntWithCoin(n)
+  implicit def intWithVp(  n: Int): IntWithVp   = new IntWithVp(n)
 }
