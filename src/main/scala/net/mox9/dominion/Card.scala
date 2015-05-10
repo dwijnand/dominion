@@ -41,3 +41,9 @@ sealed trait TreasureCard extends Card { def value: Coin }
 case object Copper extends TreasureCard { def cost = 0.coin ; def value = 1.coin }
 case object Silver extends TreasureCard { def cost = 3.coin ; def value = 2.coin }
 case object Gold   extends TreasureCard { def cost = 6.coin ; def value = 3.coin }
+
+sealed trait VictoryCard extends Card { def value: Vp }
+
+case object Estate   extends VictoryCard { def cost = 2.coin ; def value = 1.vp }
+case object Dutchy   extends VictoryCard { def cost = 5.coin ; def value = 3.vp }
+case object Province extends VictoryCard { def cost = 8.coin ; def value = 6.vp }
