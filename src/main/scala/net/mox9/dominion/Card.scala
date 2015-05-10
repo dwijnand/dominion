@@ -16,17 +16,9 @@ case class IntWithCoin(private val n: Int) extends AnyVal {
   def coin = Coin(n)
 }
 
-sealed trait VPoint extends Any {
-  def value: Int
-  def +(c: VPoint): VPoint
-  def -(c: VPoint): VPoint
-}
-object VPoint extends (Int => VPoint) {
-  def apply(n: Int): VPoint = VPointImpl(n max 0)
-  private final case class VPointImpl(value: Int) extends AnyVal with VPoint {
-    def +(p: VPoint) = VPoint(value + p.value)
-    def -(p: VPoint) = VPoint(value - p.value)
-  }
+case class VPoint(value: Int) extends AnyVal {
+  def +(p: VPoint) = VPoint(value + p.value)
+  def -(p: VPoint) = VPoint(value - p.value)
 }
 case class IntWithVp(private val n: Int) extends AnyVal {
   def vp = VPoint(n)
