@@ -12,16 +12,10 @@ object Coin extends (Int => Coin) {
     def -(c: Coin) = Coin(value - c.value)
   }
 }
-case class IntWithCoin(private val n: Int) extends AnyVal {
-  def coin = Coin(n)
-}
 
 case class VPoint(value: Int) extends AnyVal {
   def +(p: VPoint) = VPoint(value + p.value)
   def -(p: VPoint) = VPoint(value - p.value)
-}
-case class IntWithVp(private val n: Int) extends AnyVal {
-  def vp = VPoint(n)
 }
 
 trait Card {
