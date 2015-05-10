@@ -1,21 +1,21 @@
 package net.mox9.dominion
 
-sealed trait Cost extends Any {
+sealed trait Coin extends Any {
   def value: Int
-  def +(c: Cost): Cost
-  def -(c: Cost): Cost
+  def +(c: Coin): Coin
+  def -(c: Coin): Coin
 }
-object Cost extends (Int => Cost) {
-  def apply(n: Int): Cost = CostImpl(n max 0)
-  private final case class CostImpl(value: Int) extends Cost {
-    def +(c: Cost): Cost = Cost(value + c.value)
-    def -(c: Cost): Cost = Cost(value - c.value)
+object Coin extends (Int => Coin) {
+  def apply(n: Int): Coin = CoinImpl(n max 0)
+  private final case class CoinImpl(value: Int) extends Coin {
+    def +(c: Coin) = Coin(value + c.value)
+    def -(c: Coin) = Coin(value - c.value)
   }
 }
-case class IntWithCost(private val n: Int) extends AnyVal {
-  def cost = Cost(n)
+case class IntWithCoin(private val n: Int) extends AnyVal {
+  def coin = Coin(n)
 }
 
 trait Card {
-  def cost: Cost
+  def cost: Coin
 }
