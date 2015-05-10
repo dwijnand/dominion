@@ -16,20 +16,20 @@ case class IntWithCoin(private val n: Int) extends AnyVal {
   def coin = Coin(n)
 }
 
-sealed trait Vp extends Any {
+sealed trait VPoint extends Any {
   def value: Int
-  def +(c: Vp): Vp
-  def -(c: Vp): Vp
+  def +(c: VPoint): VPoint
+  def -(c: VPoint): VPoint
 }
-object Vp extends (Int => Vp) {
-  def apply(n: Int): Vp = VpImpl(n max 0)
-  private final case class VpImpl(value: Int) extends AnyVal with Vp {
-    def +(vp: Vp) = Vp(value + vp.value)
-    def -(vp: Vp) = Vp(value - vp.value)
+object VPoint extends (Int => VPoint) {
+  def apply(n: Int): VPoint = VPointImpl(n max 0)
+  private final case class VPointImpl(value: Int) extends AnyVal with VPoint {
+    def +(p: VPoint) = VPoint(value + p.value)
+    def -(p: VPoint) = VPoint(value - p.value)
   }
 }
 case class IntWithVp(private val n: Int) extends AnyVal {
-  def vp = Vp(n)
+  def vp = VPoint(n)
 }
 
 trait Card {
@@ -42,7 +42,7 @@ case object Copper extends TreasureCard { def cost = 0.coin ; def value = 1.coin
 case object Silver extends TreasureCard { def cost = 3.coin ; def value = 2.coin }
 case object Gold   extends TreasureCard { def cost = 6.coin ; def value = 3.coin }
 
-sealed trait VictoryCard extends Card { def value: Vp }
+sealed trait VictoryCard extends Card { def value: VPoint }
 
 case object Estate   extends VictoryCard { def cost = 2.coin ; def value = 1.vp }
 case object Dutchy   extends VictoryCard { def cost = 5.coin ; def value = 3.vp }
