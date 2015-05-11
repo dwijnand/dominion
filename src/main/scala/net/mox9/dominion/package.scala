@@ -17,11 +17,11 @@ package object dominion {
 
   implicit def anyW[A](x: A): AnyW[A] = new AnyW(x)
 
-  implicit case class IntWithCoin(private val n: Int) extends AnyVal {
+  implicit class IntWithCoin(private val n: Int) extends AnyVal {
     def coin = Coin(n)
   }
 
-  implicit case class IntWithVp(private val n: Int) extends AnyVal {
+  implicit class IntWithVp(private val n: Int) extends AnyVal {
     def vp = VPoint(n)
   }
 }
