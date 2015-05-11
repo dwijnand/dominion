@@ -15,7 +15,14 @@ package object dominion {
   def const[T, U](x: T)(y: U): T = Function.const(x)(y)
   def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]) = scala.collection.breakOut[From, T, To]
 
-  implicit def anyW[A](x: A): AnyW[A] = new AnyW(x)
+  implicit class AnyW[A](private val x: A) extends AnyVal {
+    def maybe[B](pf: A ?=> B): Option[B] = pf lift x
+
+    @inline def sideEffect(body: Unit): A = x
+    @inline def doto(f: A => Unit): A     = sideEffect(f(x))
+    @inline def pipe[B](f: A => B): B     = f(x)
+    @inline def |>[B](f: A => B): B       = f(x)
+  }
 
   implicit class IntWithCoin(private val n: Int) extends AnyVal {
     def coin = Coin(n)
