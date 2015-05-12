@@ -10,6 +10,8 @@ package object dominion {
   type CTag[T]                = scala.reflect.ClassTag[T]
   type tailrec                = scala.annotation.tailrec
 
+  type Cards = Seq[Card]
+
   def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
 
   def const[T, U](x: T)(y: U): T = Function.const(x)(y)
