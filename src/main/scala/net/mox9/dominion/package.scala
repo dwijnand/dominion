@@ -30,7 +30,7 @@ package object dominion {
     def coins = Coins(n)
   }
 
-  implicit class IntWithVp(private val n: Int) extends AnyVal {
-    def vp = VPoint(n)
+  implicit class IntWithVps(private val n: Int) extends AnyVal {
+    def vps = VPoints(n)
   }
 }
