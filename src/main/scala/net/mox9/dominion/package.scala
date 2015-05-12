@@ -10,6 +10,8 @@ package object dominion {
   type CTag[T]                = scala.reflect.ClassTag[T]
   type tailrec                = scala.annotation.tailrec
 
+  val -> = Product2
+
   type Cards = Seq[Card]
 
   def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
