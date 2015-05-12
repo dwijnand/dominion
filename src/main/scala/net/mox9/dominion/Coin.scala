@@ -10,5 +10,6 @@ object Coin extends (Int => Coin) {
   private final case class CoinImpl(value: Int) extends AnyVal with Coin {
     def +(c: Coin) = Coin(value + c.value)
     def -(c: Coin) = Coin(value - c.value)
+    def copy(value: Int = this.value) = Coin(value)
   }
 }
