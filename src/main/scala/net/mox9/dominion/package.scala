@@ -26,8 +26,8 @@ package object dominion {
     @inline def |>[B](f: A => B): B       = f(x)
   }
 
-  implicit class IntWithCoin(private val n: Int) extends AnyVal {
-    def coin = Coin(n)
+  implicit class IntWithCoins(private val n: Int) extends AnyVal {
+    def coins = Coins(n)
   }
 
   implicit class IntWithVp(private val n: Int) extends AnyVal {
