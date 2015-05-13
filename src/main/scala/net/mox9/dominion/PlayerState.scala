@@ -10,6 +10,8 @@ trait PlayerView {
   def coins   : Coins
 }
 
+// TODO: Drop case to stop copy?
+// TODO: Split state from turn state?
 case class PlayerState(
   deck        : Deck,
   hand        : Vector[Card],
@@ -35,6 +37,13 @@ case class PlayerState(
             case None                  => s.copy(newDeck, hand,         DiscardPile.empty, rng = newRng)
           }
       }
+  }
+}
+object PlayerState {
+  def start(rng0: Rng): PlayerState = {
+    val deck -> rng =
+      Deck.shuffleNew(List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate), rng0)
+    PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng)
   }
 }
 
