@@ -12,8 +12,6 @@ package object dominion {
 
   val -> = Product2
 
-  type Cards = Seq[Card]
-
   def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
 
   def const[T, U](x: T)(y: U): T = Function.const(x)(y)
