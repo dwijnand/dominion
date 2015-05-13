@@ -69,7 +69,7 @@ class DiscardPile private (cards: List[Card]) {
   def ::(c: Card): DiscardPile        = new DiscardPile(c :: cards)
   def :::(cs: Seq[Card]): DiscardPile = new DiscardPile(cs.toList ::: cards)
 
-  def newDeck(rng: Rng): Deck -> Rng = ???
+  def newDeck(rng: Rng): Deck -> Rng = Deck.shuffleNew(cards, rng)
 }
 object DiscardPile {
   def empty: DiscardPile = new DiscardPile(Nil)
