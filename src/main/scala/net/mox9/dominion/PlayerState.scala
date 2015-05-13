@@ -27,14 +27,14 @@ case class PlayerState(
   def handSize = hand.size
 
   def draw(n: Int): PlayerState =
-    (0 to n).foldLeft(this) { (s, _) =>
-      deck.draw match {
-        case Some(card -> remDeck) => s.copy(remDeck, hand :+ card)
+    (1 to n).foldLeft(this) { (s, _) =>
+      s.deck.draw match {
+        case Some(card -> remDeck) => s.copy(remDeck, s.hand :+ card)
         case None                  =>
           val newDeck -> newRng = discardPile newDeck rng
           newDeck.draw match {
-            case Some(card -> remDeck) => s.copy(remDeck, hand :+ card, DiscardPile.empty, rng = newRng)
-            case None                  => s.copy(newDeck, hand,         DiscardPile.empty, rng = newRng)
+            case Some(card -> remDeck) => s.copy(remDeck, s.hand :+ card, DiscardPile.empty, rng = newRng)
+            case None                  => s.copy(newDeck, s.hand,         DiscardPile.empty, rng = newRng)
           }
       }
   }
@@ -46,6 +46,10 @@ object PlayerState {
     PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng)
   }
 }
+
+// TODO: Pretty typeclass
+// TODO: Spec draw
+// drawing 5 makes hand 5
 
 class Deck private (cards: List[Card]) {
   def size: Int        = cards.size
