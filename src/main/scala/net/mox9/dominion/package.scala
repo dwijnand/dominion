@@ -26,6 +26,17 @@ package object dominion {
     @inline def |>[B](f: A => B): B       = f(x)
   }
 
+  implicit class AnyWithOpt[T](x: T) {
+    @inline def some: Option[T] = Some(x)
+    @inline def opt: Option[T]  = Option(x)
+  }
+  @inline def none[T]: Option[T] = None
+
+  implicit class AnyWithEither[T](x: T) {
+    @inline def left[B]:  T \/ B = Left(x)
+    @inline def right[A]: A \/ T = Right(x)
+  }
+
   implicit class IntWithCoins(private val n: Int) extends AnyVal {
     def coins = Coins(n)
   }
