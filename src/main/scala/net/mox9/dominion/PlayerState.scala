@@ -77,7 +77,7 @@ object Deck {
 
 class DiscardPile private (cards: List[Card]) {
   def topCard: Option[Card] = cards.headOption
-  def isEmpty: Boolean = topCard.isEmpty
+  def isEmpty: Boolean      = cards.isEmpty
 
   def ::(c: Card): DiscardPile        = new DiscardPile(c :: cards)
   def :::(cs: Seq[Card]): DiscardPile = new DiscardPile(cs.toList ::: cards)
