@@ -37,11 +37,10 @@ package object dominion {
     @inline def right[A]: A \/ T = Right(x)
   }
 
-  implicit class IntWithCoins(private val n: Int) extends AnyVal {
-    def coins = Coins(n)
-  }
-
-  implicit class IntWithVps(private val n: Int) extends AnyVal {
-    def vps = VPoints(n)
+  implicit class IntToResources(private val n: Int) extends AnyVal {
+    def actions = Actions(n)
+    def buys    = Buys(n)
+    def coins   = Coins(n)
+    def vps     = VPoints(n)
   }
 }
