@@ -21,8 +21,7 @@ class PlayerState(
   val buys    : Buys,
   val coins   : Coins,
 
-  rng   : Rng,
-  turns : Int
+  rng: Rng
 ) extends PlayerView {
 
   def handSize = hand.size
@@ -49,15 +48,14 @@ class PlayerState(
     buys    : Buys    = buys,
     coins   : Coins   = coins,
 
-    rng   : Rng = rng,
-    turns : Int = turns
-  ) = new PlayerState(deck, hand, discardPile, actions, buys, coins, rng, turns)
+    rng: Rng = rng
+  ) = new PlayerState(deck, hand, discardPile, actions, buys, coins, rng)
 }
 object PlayerState {
   def create(rng0: Rng): PlayerState = {
     val startingCards = List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate)
     val deck -> rng = Deck.shuffleNew(startingCards, rng0)
-    new PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng, 0)
+    new PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng)
   }
 }
 
