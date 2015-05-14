@@ -55,8 +55,8 @@ class PlayerState(
 }
 object PlayerState {
   def create(rng0: Rng): PlayerState = {
-    val deck -> rng =
-      Deck.shuffleNew(List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate), rng0)
+    val startingCards = List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate)
+    val deck -> rng = Deck.shuffleNew(startingCards, rng0)
     new PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng, 0)
   }
 }
