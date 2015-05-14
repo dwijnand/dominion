@@ -26,6 +26,13 @@ package object dominion {
     @inline def |>[B](f: A => B): B       = f(x)
   }
 
+  implicit class Product2W[A, B](p: A -> B) extends AnyVal {
+    @inline def mapFst[A2](f: A => A2): A2 -> B = f(p._1) -> p._2
+    @inline def mapSnd[B2](f: B => B2): A -> B2 = p._1 -> f(p._2)
+  }
+  @inline def fst[A, B](p: A -> B): A = p._1
+  @inline def snd[A, B](p: A -> B): B = p._2
+
   implicit class AnyWithOpt[T](x: T) {
     @inline def some: Option[T] = Some(x)
     @inline def opt: Option[T]  = Option(x)
