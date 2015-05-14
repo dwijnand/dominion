@@ -12,16 +12,17 @@ trait PlayerView {
 
 // TODO: Drop case to stop copy?
 // TODO: Split state from turn state?
-case class PlayerState(
-  deck        : Deck,
-  hand        : Vector[Card],
-  discardPile : DiscardPile,
+class PlayerState(
+  val deck        : Deck,
+  val hand        : Vector[Card],
+  val discardPile : DiscardPile,
 
-  actions : Actions,
-  buys    : Buys,
-  coins   : Coins,
+  val actions : Actions,
+  val buys    : Buys,
+  val coins   : Coins,
 
-  rng: Rng
+  rng   : Rng,
+  turns : Int
 ) extends PlayerView {
 
   def handSize = hand.size
@@ -38,12 +39,25 @@ case class PlayerState(
           }
       }
   }
+
+  private def copy(
+    deck        : Deck         = deck,
+    hand        : Vector[Card] = hand,
+    discardPile : DiscardPile  = discardPile,
+
+    actions : Actions = actions,
+    buys    : Buys    = buys,
+    coins   : Coins   = coins,
+
+    rng   : Rng = rng,
+    turns : Int = turns
+  ) = new PlayerState(deck, hand, discardPile, actions, buys, coins, rng, turns)
 }
 object PlayerState {
   def start(rng0: Rng): PlayerState = {
     val deck -> rng =
       Deck.shuffleNew(List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate), rng0)
-    PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng)
+    new PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng, 0)
   }
 }
 
