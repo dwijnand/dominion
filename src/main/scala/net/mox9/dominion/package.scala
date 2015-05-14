@@ -34,10 +34,11 @@ package object dominion {
   @inline def snd[A, B](p: A -> B): B = p._2
 
   implicit class AnyWithOpt[T](x: T) {
-    @inline def some: Option[T] = Some(x)
-    @inline def opt: Option[T]  = Option(x)
+    @inline def some : Option[T] = Some(x)
+    @inline def opt  : Option[T] = Option(x)
   }
-  @inline def none[T]: Option[T] = None
+  @inline def some[T](x: T) : Option[T] = Some(x)
+  @inline def none[T]       : Option[T] = None
 
   implicit class AnyWithEither[T](x: T) {
     @inline def left[B]:  T \/ B = Left(x)
