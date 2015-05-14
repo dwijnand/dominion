@@ -44,6 +44,8 @@ package object dominion {
     @inline def left[B]:  T \/ B = Left(x)
     @inline def right[A]: A \/ T = Right(x)
   }
+  @inline def left[A, B](x: A)  : A \/ B = Left(x)
+  @inline def right[A, B](x: B) : A \/ B = Right(x)
 
   implicit class IntToResources(private val n: Int) extends AnyVal {
     def actions = Actions(n)
