@@ -27,8 +27,8 @@ package object dominion {
   }
 
   implicit class Product2W[A, B](p: A -> B) extends AnyVal {
-    @inline def mapFst[A2](f: A => A2): A2 -> B = { val (a -> b) = p ; f(a) -> b }
-    @inline def mapSnd[B2](f: B => B2): A -> B2 = { val (a -> b) = p ; a -> f(b) }
+    @inline def mapFst[A2](f: A => A2): (A2, B) = { val (a -> b) = p ; f(a) -> b }
+    @inline def mapSnd[B2](f: B => B2): (A, B2) = { val (a -> b) = p ; a -> f(b) }
   }
   @inline def fst[A, B](p: A -> B): A = p._1
   @inline def snd[A, B](p: A -> B): B = p._2
