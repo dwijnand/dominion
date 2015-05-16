@@ -4,6 +4,47 @@ package net.mox9.dominion
 // TODO: Random kingdom cards
 // TODO: endTurn game over or next player
 // TODO: Tabular output
+// TODO: Pretty typeclass
+// TODO: draw spec
+// TODO: drawing 5 makes hand 5
+// TODO: drawing reduces by 1
+// TODO: drawing when empty?
+// TODO: class Hand ??
+// TODO: appending adds to topCard
+// TODO: appending multiple adds to topCard
+// PosInt type ??
+
+class Deck private (cards: List[Card]) {
+  def size: Int        = cards.size
+  def isEmpty: Boolean = cards.isEmpty
+
+  def draw: Option[Card -> Deck] =
+    cards match {
+      case Nil    => None
+      case h :: t => h -> new Deck(t) some
+    }
+
+  // TODO reveal
+}
+object Deck {
+  def shuffleNew(cards: List[Card], rng: Rng): Deck -> Rng = {
+    val shuffledCards -> rng2 = rng shuffle cards
+    new Deck(shuffledCards) -> rng2
+  }
+}
+
+class DiscardPile private (cards: List[Card]) {
+  def topCard: Option[Card] = cards.headOption
+  def isEmpty: Boolean      = cards.isEmpty
+
+  def ::(c: Card): DiscardPile        = new DiscardPile(c :: cards)
+  def :::(cs: Seq[Card]): DiscardPile = new DiscardPile(cs.toList ::: cards)
+
+  def newDeck(rng: Rng): Deck -> Rng = Deck.shuffleNew(cards, rng)
+}
+object DiscardPile {
+  def empty: DiscardPile = new DiscardPile(Nil)
+}
 
 class PlayerState private (
   val deck        : Deck,
@@ -67,48 +108,3 @@ class CurrentPlayerState(
     rng: Rng = rng
   ) = new CurrentPlayerState(deck, hand, discardPile, actions, buys, coins, rng)
 }
-
-// TODO: Pretty typeclass
-// TODO: Spec draw
-// drawing 5 makes hand 5
-
-class Deck private (cards: List[Card]) {
-  def size: Int        = cards.size
-  def isEmpty: Boolean = cards.isEmpty
-
-  def draw: Option[Card -> Deck] =
-    cards match {
-      case Nil    => None
-      case h :: t => h -> new Deck(t) some
-    }
-
-  // TODO reveal
-}
-object Deck {
-  def shuffleNew(cards: List[Card], rng: Rng): Deck -> Rng = {
-    val shuffledCards -> rng2 = rng shuffle cards
-    new Deck(shuffledCards) -> rng2
-  }
-}
-
-// drawing reduces by 1
-// what about when empty?
-
-//case class Hand ??
-
-class DiscardPile private (cards: List[Card]) {
-  def topCard: Option[Card] = cards.headOption
-  def isEmpty: Boolean      = cards.isEmpty
-
-  def ::(c: Card): DiscardPile        = new DiscardPile(c :: cards)
-  def :::(cs: Seq[Card]): DiscardPile = new DiscardPile(cs.toList ::: cards)
-
-  def newDeck(rng: Rng): Deck -> Rng = Deck.shuffleNew(cards, rng)
-}
-object DiscardPile {
-  def empty: DiscardPile = new DiscardPile(Nil)
-}
-// appending adds to topCard
-// appending multiple adds to topCard
-
-//trait PosInt
