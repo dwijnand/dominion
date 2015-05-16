@@ -3,7 +3,6 @@ package net.mox9.dominion
 // TODO: Supply
 // TODO: Random kingdom cards
 // TODO: Series/Release field on cards and enumerate members
-// TODO: CardKind basic and kingdom
 // TODO: endTurn game over or next player
 // TODO: Tabular output
 
