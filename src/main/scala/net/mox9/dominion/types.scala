@@ -12,3 +12,8 @@ case class Coins(value: Int) extends AnyVal {
 case class VPoints(value: Int) extends AnyVal {
   def +(p: VPoints) = VPoints(value + p.value)
 }
+
+class PlayerCount private (val value: Int) extends AnyVal
+object PlayerCount {
+  def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
+}
