@@ -14,8 +14,11 @@ package object dominion {
 
   def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
 
+  def nanoTime: Long = java.lang.System.nanoTime
+
   def const[T, U](x: T)(y: U): T = Function.const(x)(y)
-  def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]) = scala.collection.breakOut[From, T, To]
+  def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]): CBF[From, T, To] =
+    scala.collection.breakOut[From, T, To]
 
   implicit class AnyW[A](private val x: A) extends AnyVal {
     def maybe[B](pf: A ?=> B): Option[B] = pf lift x
