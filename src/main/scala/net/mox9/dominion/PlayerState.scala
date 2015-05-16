@@ -7,7 +7,20 @@ package net.mox9.dominion
 // TODO: endTurn game over or next player
 // TODO: Tabular output
 
-trait PlayerView {
+class PlayerState(
+  val deck        : Deck,
+  val hand        : Vector[Card],
+  val discardPile : DiscardPile
+)
+object PlayerState {
+  def create(rng0: Rng): PlayerState -> Rng = {
+    val startingCards = List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate)
+    val deck = Deck.shuffleNew(startingCards, rng0)
+    deck mapFst (deck => new PlayerState(deck, Vector.empty, DiscardPile.empty))
+  }
+}
+
+trait CurrentPlayerView {
   def deck        : Deck
   def handSize    : Int
   def discardPile : DiscardPile
@@ -17,34 +30,33 @@ trait PlayerView {
   def coins   : Coins
 }
 
-// TODO: Drop case to stop copy?
-// TODO: Split state from turn state?
-class PlayerState(
-  val deck        : Deck,
-  val hand        : Vector[Card],
-  val discardPile : DiscardPile,
+class CurrentPlayerState(
+  state: PlayerState,
 
   val actions : Actions,
   val buys    : Buys,
   val coins   : Coins,
 
   rng: Rng
-) extends PlayerView {
+) extends CurrentPlayerView {
 
-  def handSize = hand.size
+          def deck        : Deck         = state.deck
+  private def hand        : Vector[Card] = state.hand
+          def handSize    : Int          = state.hand.size
+          def discardPile : DiscardPile  = state.discardPile
 
-  def draw(n: Int): PlayerState =
-    (1 to n).foldLeft(this) { (s, _) =>
-      s.deck.draw match {
-        case Some(card -> remDeck) => s.copy(remDeck, s.hand :+ card)
+  def draw(n: Int): CurrentPlayerState =
+    (1 to n).foldLeft(this) { (cs, _) =>
+      cs.deck.draw match {
+        case Some(card -> remDeck) => cs.copy(remDeck, cs.hand :+ card)
         case None                  =>
           val newDeck -> newRng = discardPile newDeck rng
           newDeck.draw match {
-            case Some(card -> remDeck) => s.copy(remDeck, s.hand :+ card, DiscardPile.empty, rng = newRng)
-            case None                  => s.copy(newDeck, s.hand,         DiscardPile.empty, rng = newRng)
+            case Some(card -> remDeck) => cs.copy(remDeck, cs.hand :+ card, DiscardPile.empty, rng = newRng)
+            case None                  => cs.copy(newDeck, cs.hand,         DiscardPile.empty, rng = newRng)
           }
       }
-  }
+    }
 
   private def copy(
     deck        : Deck         = deck,
@@ -56,14 +68,7 @@ class PlayerState(
     coins   : Coins   = coins,
 
     rng: Rng = rng
-  ) = new PlayerState(deck, hand, discardPile, actions, buys, coins, rng)
-}
-object PlayerState {
-  def create(rng0: Rng): PlayerState = {
-    val startingCards = List(Copper, Copper, Copper, Copper, Copper, Copper, Copper, Estate, Estate, Estate)
-    val deck -> rng = Deck.shuffleNew(startingCards, rng0)
-    new PlayerState(deck, Vector.empty, DiscardPile.empty, 0.actions, 0.buys, 0.coins, rng)
-  }
+  ) = new CurrentPlayerState(new PlayerState(deck, hand, discardPile), actions, buys, coins, rng)
 }
 
 // TODO: Pretty typeclass
