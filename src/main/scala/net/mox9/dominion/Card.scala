@@ -11,8 +11,6 @@ case object Treasure extends CardType
 case object Victory  extends CardType
 
 sealed trait CardKind
-case object Basic   extends CardKind
-case object Kingdom extends CardKind
 
 trait Card {
   def name: String = toString
@@ -21,8 +19,9 @@ trait Card {
   def types: Seq[CardType]
 }
 
-abstract class BasicCard   extends Card { def kind = Basic }
-abstract class KingdomCard extends Card { def kind = Kingdom ; def series: Series }
+// TODO: "kind = this" insane?
+abstract class BasicCard   extends Card with CardKind { def kind = this }
+abstract class KingdomCard extends Card with CardKind { def kind = this ; def series: Series }
 
 abstract class TreasureCard extends BasicCard { def types = Seq(Treasure) }
 case object Copper extends TreasureCard { def series = S00Base ; def cost = 0.coins ; def value = 1.coins }
@@ -34,4 +33,5 @@ case object Estate   extends VictoryCard { def cost = 2.coins ; def value = 1.vp
 case object Dutchy   extends VictoryCard { def cost = 5.coins ; def value = 3.vps }
 case object Province extends VictoryCard { def cost = 8.coins ; def value = 6.vps }
 
+// TODO: "types = Seq(this)" insane?
 case object Curse extends BasicCard { def cost = 0.coins ; def types = Seq(CurseK) }
