@@ -47,3 +47,16 @@ case class Rng(seed: Long) extends AnyVal {
     (bf(xs) ++= buf).result() -> rng
   }
 }
+object Rng {
+  private val seedUniquifier = new AtomicLong(8682522807148012L)
+
+  @tailrec private def newSeedUniquifier(): Long = {
+    val current = seedUniquifier.get()
+    val next = current * 181783497276652981L
+    if (seedUniquifier.compareAndSet(current, next))
+      next
+    else newSeedUniquifier()
+  }
+
+  def randomSeed() = newSeedUniquifier() ^ System.nanoTime()
+}
