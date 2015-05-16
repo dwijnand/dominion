@@ -14,15 +14,15 @@ package net.mox9.dominion
 // PosInt type ??
 
 class Supply private (
-  coppers : CardCount,   silvers  : CardCount,   golds     : CardCount,
-  estates : CardCount,   dutchies : CardCount,   provinces : CardCount,
+  val coppers : CardCount,   val silvers  : CardCount,   val golds     : CardCount,
+  val estates : CardCount,   val dutchies : CardCount,   val provinces : CardCount,
 
-  curses: CardCount,
+  val curses: CardCount,
 
-  card0: KingdomCard -> CardCount, card1: KingdomCard -> CardCount, card2: KingdomCard -> CardCount,
-  card3: KingdomCard -> CardCount, card4: KingdomCard -> CardCount, card5: KingdomCard -> CardCount,
-  card6: KingdomCard -> CardCount, card7: KingdomCard -> CardCount, card8: KingdomCard -> CardCount,
-  card9: KingdomCard -> CardCount
+  val card0: KingdomCard -> CardCount, val card1: KingdomCard -> CardCount, val card2: KingdomCard -> CardCount,
+  val card3: KingdomCard -> CardCount, val card4: KingdomCard -> CardCount, val card5: KingdomCard -> CardCount,
+  val card6: KingdomCard -> CardCount, val card7: KingdomCard -> CardCount, val card8: KingdomCard -> CardCount,
+  val card9: KingdomCard -> CardCount
 )
 object Supply {
   def create(
