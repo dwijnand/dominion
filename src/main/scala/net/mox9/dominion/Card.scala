@@ -15,6 +15,7 @@ case object Basic   extends CardKind
 case object Kingdom extends CardKind
 
 trait Card {
+  def name: String = toString
   def kind: CardKind
   def cost: Coins
   def types: Seq[CardType]
