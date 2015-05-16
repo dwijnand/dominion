@@ -15,7 +15,8 @@ case class VPoints(value: Int) extends AnyVal {
 
 class PlayerCount private (val value: Int) extends AnyVal
 object PlayerCount {
-  def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
+  def apply(c: Int) = c sideEffect require(c >= 2 && c <= 4) pipe (new PlayerCount(_))
+//def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
 }
 
 class CardCount private (val value: Int) extends AnyVal
