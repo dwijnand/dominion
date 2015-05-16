@@ -17,3 +17,8 @@ class PlayerCount private (val value: Int) extends AnyVal
 object PlayerCount {
   def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
 }
+
+class CardCount private (val value: Int) extends AnyVal
+object CardCount {
+  def apply(c: Int) = c sideEffect require(c >= 0) pipe (new CardCount(_))
+}

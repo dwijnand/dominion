@@ -48,6 +48,7 @@ package object dominion {
   @inline def right[A, B](x: B) : A \/ B = Right(x)
 
   implicit class IntToResources(private val n: Int) extends AnyVal {
+    def cards   = CardCount(n)
     def actions = Actions(n)
     def buys    = Buys(n)
     def coins   = Coins(n)
