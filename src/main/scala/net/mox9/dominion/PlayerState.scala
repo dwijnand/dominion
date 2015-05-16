@@ -5,7 +5,7 @@ package net.mox9.dominion
 // TODO: endTurn game over or next player
 // TODO: Tabular output
 
-class PlayerState(
+class PlayerState private (
   val deck        : Deck,
   val hand        : Vector[Card],
   val discardPile : DiscardPile
@@ -29,7 +29,9 @@ trait CurrentPlayerView {
 }
 
 class CurrentPlayerState(
-  state: PlayerState,
+          val deck        : Deck,
+  private val hand        : Vector[Card],
+          val discardPile : DiscardPile,
 
   val actions : Actions,
   val buys    : Buys,
@@ -38,10 +40,7 @@ class CurrentPlayerState(
   rng: Rng
 ) extends CurrentPlayerView {
 
-          def deck        : Deck         = state.deck
-  private def hand        : Vector[Card] = state.hand
-          def handSize    : Int          = state.hand.size
-          def discardPile : DiscardPile  = state.discardPile
+  def handSize: Int = hand.size
 
   def draw(n: Int): CurrentPlayerState =
     (1 to n).foldLeft(this) { (cs, _) =>
@@ -66,7 +65,7 @@ class CurrentPlayerState(
     coins   : Coins   = coins,
 
     rng: Rng = rng
-  ) = new CurrentPlayerState(new PlayerState(deck, hand, discardPile), actions, buys, coins, rng)
+  ) = new CurrentPlayerState(deck, hand, discardPile, actions, buys, coins, rng)
 }
 
 // TODO: Pretty typeclass
