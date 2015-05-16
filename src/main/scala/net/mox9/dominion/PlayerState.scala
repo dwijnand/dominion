@@ -1,6 +1,5 @@
 package net.mox9.dominion
 
-// TODO: Supply
 // TODO: Random kingdom cards
 // TODO: endTurn game over or next player
 // TODO: Tabular output
@@ -13,6 +12,74 @@ package net.mox9.dominion
 // TODO: appending adds to topCard
 // TODO: appending multiple adds to topCard
 // PosInt type ??
+
+class Supply private (
+  coppers : CardCount,
+  silvers : CardCount,
+  golds   : CardCount,
+
+  estates   : CardCount,
+  dutchies  : CardCount,
+  provinces : CardCount,
+
+  curses: CardCount,
+
+  card0: KingdomCard -> CardCount,
+  card1: KingdomCard -> CardCount,
+  card2: KingdomCard -> CardCount,
+  card3: KingdomCard -> CardCount,
+  card4: KingdomCard -> CardCount,
+  card5: KingdomCard -> CardCount,
+  card6: KingdomCard -> CardCount,
+  card7: KingdomCard -> CardCount,
+  card8: KingdomCard -> CardCount,
+  card9: KingdomCard -> CardCount
+)
+object Supply {
+  def create(
+    playerCount: PlayerCount,
+    card0: KingdomCard,
+    card1: KingdomCard,
+    card2: KingdomCard,
+    card3: KingdomCard,
+    card4: KingdomCard,
+    card5: KingdomCard,
+    card6: KingdomCard,
+    card7: KingdomCard,
+    card8: KingdomCard,
+    card9: KingdomCard
+  ) = {
+    // TODO: Additional cards from other series
+    // TODO: Province start: 5p -> 15, 6p -> 18
+
+    val vcCount = (if (playerCount.value == 2) 8 else 12).cards
+
+    def count(kc: KingdomCard) = if (kc.types.contains(Victory)) vcCount else 10.cards
+
+    new Supply (
+      coppers = 60.cards,
+      silvers = 40.cards,
+      golds   = 30.cards,
+
+      estates   = vcCount,
+      dutchies  = vcCount,
+      provinces = vcCount,
+
+      curses = ((playerCount.value - 1) * 10).cards,
+
+      card0 = card0 -> count(card0),
+      card1 = card1 -> count(card1),
+      card2 = card2 -> count(card2),
+      card3 = card3 -> count(card3),
+      card4 = card4 -> count(card4),
+      card5 = card5 -> count(card5),
+      card6 = card6 -> count(card6),
+      card7 = card7 -> count(card7),
+      card8 = card8 -> count(card8),
+      card9 = card9 -> count(card9)
+    )
+  }
+}
 
 class Deck private (cards: List[Card]) {
   def size: Int        = cards.size
