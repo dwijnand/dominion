@@ -1,6 +1,7 @@
 package net.mox9.dominion
 
 // TODO: Random kingdom cards
+// TODO: TrashPile - add to supply - ::[Card]
 // TODO: endTurn game over or next player
 // TODO: Tabular output
 // TODO: Pretty typeclass
@@ -11,7 +12,7 @@ package net.mox9.dominion
 // TODO: class Hand ??
 // TODO: appending adds to topCard
 // TODO: appending multiple adds to topCard
-// PosInt type ??
+// TODO: PosInt/PosZInt type
 
 class Supply private (
   val coppers : CardCount,   val silvers  : CardCount,   val golds     : CardCount,

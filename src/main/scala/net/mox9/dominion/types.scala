@@ -13,13 +13,17 @@ case class VPoints(value: Int) extends AnyVal {
   def +(p: VPoints) = VPoints(value + p.value)
 }
 
+// TODO: Kill PlayerCount?
 class PlayerCount private (val value: Int) extends AnyVal
 object PlayerCount {
   def apply(c: Int) = c sideEffect require(c >= 2 && c <= 4) pipe (new PlayerCount(_))
 //def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
 }
 
-class CardCount private (val value: Int) extends AnyVal
+// TODO: CardCount.+ ? CardCount.- ?
+class CardCount private (val value: Int) extends AnyVal {
+//def +(cc: CardCount) = new CardCount(value + cc.value)
+}
 object CardCount {
   def apply(c: Int) = c sideEffect require(c >= 0) pipe (new CardCount(_))
 }
