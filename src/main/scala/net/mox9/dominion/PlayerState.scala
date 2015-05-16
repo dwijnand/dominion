@@ -14,16 +14,20 @@ package net.mox9.dominion
 // TODO: appending multiple adds to topCard
 // TODO: PosInt/PosZInt type
 
+class CardPile[T <: CardKind](val card: T, val count: CardCount) {
+//def inc = new CardPile[T](card, count + 1.cards)
+}
+
 class Supply private (
   val coppers : CardCount,   val silvers  : CardCount,   val golds     : CardCount,
   val estates : CardCount,   val dutchies : CardCount,   val provinces : CardCount,
 
   val curses: CardCount,
 
-  val card0: KingdomCard -> CardCount, val card1: KingdomCard -> CardCount, val card2: KingdomCard -> CardCount,
-  val card3: KingdomCard -> CardCount, val card4: KingdomCard -> CardCount, val card5: KingdomCard -> CardCount,
-  val card6: KingdomCard -> CardCount, val card7: KingdomCard -> CardCount, val card8: KingdomCard -> CardCount,
-  val card9: KingdomCard -> CardCount
+  val card0: CardPile[KingdomCard], val card1: CardPile[KingdomCard], val card2: CardPile[KingdomCard],
+  val card3: CardPile[KingdomCard], val card4: CardPile[KingdomCard], val card5: CardPile[KingdomCard],
+  val card6: CardPile[KingdomCard], val card7: CardPile[KingdomCard], val card8: CardPile[KingdomCard],
+  val card9: CardPile[KingdomCard]
 )
 object Supply {
   def create(
@@ -36,7 +40,7 @@ object Supply {
 
     val vcCount = (if (playerCount.value == 2) 8 else 12).cards
 
-    def count(kc: KingdomCard) = kc -> (if (kc.types.contains(Victory)) vcCount else 10.cards)
+    def newPile(kc: KingdomCard) = new CardPile(kc, if (kc.types.contains(Victory)) vcCount else 10.cards)
 
     new Supply (
       coppers = 60.cards,   silvers  = 40.cards,   golds     = 30.cards,
@@ -44,9 +48,9 @@ object Supply {
 
       curses = ((playerCount.value - 1) * 10).cards,
 
-      card0 = count(card0), card1 = count(card1), card2 = count(card2), card3 = count(card3),
-      card4 = count(card4), card5 = count(card5), card6 = count(card6), card7 = count(card7),
-      card8 = count(card8), card9 = count(card9)
+      card0 = newPile(card0), card1 = newPile(card1), card2 = newPile(card2), card3 = newPile(card3),
+      card4 = newPile(card4), card5 = newPile(card5), card6 = newPile(card6), card7 = newPile(card7),
+      card8 = newPile(card8), card9 = newPile(card9)
     )
   }
 }
