@@ -3,14 +3,14 @@ package net.mox9
 import scala.language.implicitConversions
 
 package object dominion {
-  type ->[+A, +B]             = Product2[A, B]
-  type ?=>[-A, +B]            = PartialFunction[A, B]
-  type CTag[T]                = scala.reflect.ClassTag[T]
-  type tailrec                = scala.annotation.tailrec
-
   type AtomicLong = java.util.concurrent.atomic.AtomicLong
 
-  type \/[+A, +B]             = Either[A, B]
+  type ->[+A, +B]  = scala.Product2[A, B]
+  type ?=>[-A, +B] = scala.PartialFunction[A, B]
+  type CTag[T]     = scala.reflect.ClassTag[T]
+  type tailrec     = scala.annotation.tailrec
+
+  type \/[+A, +B]             = scala.util.Either[A, B]
   type CBF[-From, -Elem, +To] = scala.collection.generic.CanBuildFrom[From, Elem, To]
 
   val -> = Product2
