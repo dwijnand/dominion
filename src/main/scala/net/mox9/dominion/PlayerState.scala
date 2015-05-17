@@ -14,7 +14,7 @@ package net.mox9.dominion
 // TODO: appending multiple adds to topCard
 // TODO: PosInt/PosZInt type
 
-class CardPile[T <: CardKind](val card: T, val count: CardCount) {
+class CardPile[T <: Card](val card: T, val count: CardCount) {
   // TODO: Kill CardPile.toString?
   override val toString = s"$count $card"
 //def inc = new CardPile[T](card, count + 1.cards)
