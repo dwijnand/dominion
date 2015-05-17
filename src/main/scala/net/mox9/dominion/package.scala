@@ -56,6 +56,10 @@ package object dominion {
   @inline def nil[A]  : List[A]   = Nil
   @inline def seqZ[A] : Seq[A]    = Nil
   @inline def vecZ[A] : Vector[A] = Vector.empty
+  implicit class AnyWithColl[A](val x: A) extends AnyVal {
+    @inline def vec: Vector[A] = Vector(x)
+  }
+  // TODO: Define "mapMap" to remove "xs map (_ map ...)"
 
   implicit class IntToResources(private val n: Int) extends AnyVal {
     def cards   = CardCount(n)
