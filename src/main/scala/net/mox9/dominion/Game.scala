@@ -22,7 +22,13 @@ object Game {
     val cards        = Vector(card0, card1, card2, card3, card4, card5, card6, card7, card8, card9)
     val cardCosts    = 6 to 2 by -1 map (_.coins) toVector
     val cardsByCount = cardCosts map (count => cards filter (_.card.cost == count)) filter (_.nonEmpty)
-    val cardsRows = cardsByCount flatMap (_ grouped 3) map (_ flatMap (cp => Vector(cp.count.toString, cp.card.toString)) padTo(6, ""))
+    def cpToStr(cp: CardPile[Card]) = Vector(cp.count.toString, cp.card.toString)
+    val cardsRows =
+      cardsByCount flatMap (_ grouped 3) map {
+        case Vector(cp)            => Vector(Vector("", ""), cpToStr(cp),  Vector("", "")).flatten
+        case Vector(cp1, cp2)      => Vector(cpToStr(cp1),   cpToStr(cp2), Vector("", "")).flatten
+        case Vector(cp1, cp2, cp3) => Vector(cpToStr(cp1),   cpToStr(cp2), cpToStr(cp3)  ).flatten
+      }
 
     val board =
       Vector(
