@@ -22,6 +22,7 @@ object PlayerCount {
 
 // TODO: CardCount.+ ? CardCount.- ?
 class CardCount private (val value: Int) extends AnyVal {
+  override def toString = s"$value"
 //def +(cc: CardCount) = new CardCount(value + cc.value)
 }
 object CardCount {
