@@ -15,16 +15,16 @@ package object dominion {
 
   val -> = Product2
 
-  def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
+  @inline def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
 
-  def nanoTime: Long = java.lang.System.nanoTime
+  @inline def nanoTime: Long = java.lang.System.nanoTime
 
-  def const[T, U](x: T)(y: U): T = Function.const(x)(y)
-  def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]): CBF[From, T, To] =
+  @inline def const[T, U](x: T)(y: U): T = Function.const(x)(y)
+  @inline def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]): CBF[From, T, To] =
     scala.collection.breakOut[From, T, To]
 
   implicit class AnyW[A](private val x: A) extends AnyVal {
-    def maybe[B](pf: A ?=> B): Option[B] = pf lift x
+    @inline def maybe[B](pf: A ?=> B): Option[B] = pf lift x
 
     @inline def sideEffect(body: Unit): A = x
     @inline def doto(f: A => Unit): A     = sideEffect(f(x))
