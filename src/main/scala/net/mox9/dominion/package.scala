@@ -53,6 +53,10 @@ package object dominion {
   @inline def left[A, B](x: A)  : A \/ B = Left(x)
   @inline def right[A, B](x: B) : A \/ B = Right(x)
 
+  @inline def nil[A]  : List[A]   = Nil
+  @inline def seqZ[A] : Seq[A]    = Nil
+  @inline def vecZ[A] : Vector[A] = Vector.empty
+
   implicit class IntToResources(private val n: Int) extends AnyVal {
     def cards   = CardCount(n)
     def actions = Actions(n)
