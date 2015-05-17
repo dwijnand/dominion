@@ -11,6 +11,7 @@ package object dominion {
   type tailrec     = scala.annotation.tailrec
 
   type \/[+A, +B]             = scala.util.Either[A, B]
+  type Ordering[A]            = scala.math.Ordering[A]
   type CBF[-From, -Elem, +To] = scala.collection.generic.CanBuildFrom[From, Elem, To]
 
   val -> = Product2
@@ -21,6 +22,8 @@ package object dominion {
 
   @inline def lalign(width: Int): String = if (width == 0) "%s" else s"%-${width}s"
   @inline def ralign(width: Int): String = if (width == 0) "%s" else s"%${width}s"
+
+  //@inline def anyToStr[A](x: A): String = x.toString
 
   @inline def const[T, U](x: T)(y: U): T = Function.const(x)(y)
   @inline def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]): CBF[From, T, To] =
