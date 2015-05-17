@@ -29,6 +29,17 @@ case class Rng(seed: Long) extends AnyVal {
     }
   }
 
+  def chooseInt(lowerBound: Int, upperBound: Int): Int -> Rng = {
+    nextInt mapFst { x =>
+      val (l -> h) = if (lowerBound < upperBound) lowerBound -> upperBound else upperBound -> lowerBound
+      val diff = h - l
+      if (diff == 0)
+        l
+      else
+        l + (x.abs % (diff + 1))
+    }
+  }
+
   def shuffle[T, CC[X] <: TraversableOnce[X]](xs: CC[T])(implicit bf: CBF[CC[T], T, CC[T]]): CC[T] -> Rng = {
     val buf = new ArrayBuffer[T] ++= xs
 
