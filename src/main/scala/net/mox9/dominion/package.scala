@@ -19,6 +19,9 @@ package object dominion {
 
   @inline def nanoTime: Long = java.lang.System.nanoTime
 
+  @inline def lalign(width: Int): String = if (width == 0) "%s" else s"%-${width}s"
+  @inline def ralign(width: Int): String = if (width == 0) "%s" else s"%${width}s"
+
   @inline def const[T, U](x: T)(y: U): T = Function.const(x)(y)
   @inline def breakOut[From, T, To](implicit b: CBF[Nothing, T, To]): CBF[From, T, To] =
     scala.collection.breakOut[From, T, To]
