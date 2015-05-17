@@ -39,14 +39,14 @@ package object dominion {
   @inline def fst[A, B](p: A -> B): A = p._1
   @inline def snd[A, B](p: A -> B): B = p._2
 
-  implicit class AnyWithOpt[T](x: T) {
+  implicit class AnyWithOpt[T](private val x: T) {
     @inline def some : Option[T] = Some(x)
     @inline def opt  : Option[T] = Option(x)
   }
   @inline def some[T](x: T) : Option[T] = Some(x)
   @inline def none[T]       : Option[T] = None
 
-  implicit class AnyWithEither[T](x: T) {
+  implicit class AnyWithEither[T](private val x: T) {
     @inline def left[B]:  T \/ B = Left(x)
     @inline def right[A]: A \/ T = Right(x)
   }
@@ -56,7 +56,7 @@ package object dominion {
   @inline def nil[A]  : List[A]   = Nil
   @inline def seqZ[A] : Seq[A]    = Nil
   @inline def vecZ[A] : Vector[A] = Vector.empty
-  implicit class AnyWithColl[A](val x: A) extends AnyVal {
+  implicit class AnyWithColl[A](private val x: A) extends AnyVal {
     @inline def vec: Vector[A] = Vector(x)
   }
   // TODO: Define "mapMap" to remove "xs map (_ map ...)"
