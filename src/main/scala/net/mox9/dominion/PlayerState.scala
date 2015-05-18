@@ -39,6 +39,13 @@ object Supply {
   ) = {
     // TODO: Additional cards from other series
     // TODO: Province start: 5p -> 15, 6p -> 18
+    /*
+    2 players:  08 Estate  08 Dutchy  08 Province
+    3 players:  12 Estate  12 Dutchy  12 Province
+    4 players:  12 Estate  12 Dutchy  12 Province
+    5 players:  12 Estate  12 Dutchy  15 Province
+    6 players:  12 Estate  12 Dutchy  18 Province
+     */
 
     val vcCount = (if (playerCount.value == 2) 8 else 12).cards
 
