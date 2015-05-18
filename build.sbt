@@ -23,20 +23,20 @@ scalacOptions             += "-Ywarn-value-discard"
 maxErrors := 5
 triggeredMessage := Watched.clearWhenTriggered
 
-wartremoverWarnings += Wart.Any
-wartremoverWarnings += Wart.Any2StringAdd
-wartremoverWarnings += Wart.AsInstanceOf
-wartremoverWarnings += Wart.EitherProjectionPartial
-wartremoverWarnings += Wart.IsInstanceOf
-wartremoverWarnings += Wart.ListOps
-wartremoverWarnings += Wart.JavaConversions
-wartremoverWarnings += Wart.MutableDataStructures
-wartremoverWarnings += Wart.NonUnitStatements
-wartremoverWarnings += Wart.Null
-wartremoverWarnings += Wart.OptionPartial
-wartremoverWarnings += Wart.Return
-wartremoverWarnings += Wart.TryPartial
-wartremoverWarnings += Wart.Var
+  wartremoverWarnings += Wart.Any
+  wartremoverWarnings += Wart.Any2StringAdd
+  wartremoverWarnings += Wart.AsInstanceOf
+  wartremoverWarnings += Wart.EitherProjectionPartial
+  wartremoverWarnings += Wart.IsInstanceOf
+  wartremoverWarnings += Wart.ListOps
+  wartremoverWarnings += Wart.JavaConversions
+  wartremoverWarnings += Wart.MutableDataStructures
+//wartremoverWarnings += Wart.NonUnitStatements       // bans this.type :(
+  wartremoverWarnings += Wart.Null
+  wartremoverWarnings += Wart.OptionPartial
+  wartremoverWarnings += Wart.Return
+  wartremoverWarnings += Wart.TryPartial
+  wartremoverWarnings += Wart.Var
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
