@@ -16,6 +16,7 @@ case class VPoints(value: Int) extends AnyVal {
 // TODO: Kill PlayerCount?
 class PlayerCount private (val value: Int) extends AnyVal
 object PlayerCount {
+  // TODO: Try github.com/fthomas/refined
   def apply(c: Int) = c sideEffect require(c >= 2 && c <= 4) pipe (new PlayerCount(_))
 //def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
 }

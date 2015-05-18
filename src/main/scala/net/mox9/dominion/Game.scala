@@ -30,6 +30,21 @@ object Game {
         case Vector(cp1, cp2, cp3) => Vector(cpToStr(cp1),   cpToStr(cp2), cpToStr(cp3)  ).flatten
       }
 
+    // PhilosophersStone is 17 chars
+    val trueCardOrder = Vector(
+      Vector(card5, card6, card7, card8, card9),
+      Vector(card0, card1, card2, card3, card4)
+    )
+
+    /*
+    Actions: 01
+    Buys:    01
+    Coins:   01
+     */
+
+    // End Turn
+    // Player Treasures
+
     val board =
       Vector(
         Vector(Vector(provinces.toString, "Provinces"), cardsRows.getOrElse(0, vecZ), Vector(  golds.toString, "Gold"  )).flatten,
