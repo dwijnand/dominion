@@ -4,7 +4,7 @@ object Game {
   def main(args: Array[String]): Unit = {
     val seed = args.headOption.fold(Rng.randomSeed() doto (x => println(s"Using seed: $x")))(_.toLong)
     val rng0 = Rng(seed)
-    val playerCount -> rng1 = rng0.chooseInt(2, 4) mapFst PlayerCount
+    val playerCount -> rng1 = rng0 choose Vector(_2P, _3P, _4P)
     println(s"$playerCount players")
     val cards0 -> rng2 = rng1.shuffle(S00Base.kingdomCards) mapFst (_ take 10)
     val cards = cards0.sorted(Ordering[(Int, String)].on[Card](c => (-c.cost.value, c.name)))

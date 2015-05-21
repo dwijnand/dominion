@@ -14,14 +14,12 @@ case class VPoints(value: Int) extends AnyVal {
 }
 
 // TODO: Kill PlayerCount?
-class PlayerCount private (val value: Int) extends AnyVal {
-  override def toString = s"$value"
-}
-object PlayerCount extends (Int => PlayerCount) {
-  // TODO: Try github.com/fthomas/refined
-  def apply(c: Int) = c sideEffect require(c >= 2 && c <= 4) pipe (new PlayerCount(_))
-//def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
-}
+sealed trait PlayerCount { def value: Int ; override def toString = s"$value" }
+case object _2P extends PlayerCount { def value = 2 }
+case object _3P extends PlayerCount { def value = 3 }
+case object _4P extends PlayerCount { def value = 4 }
+//case object _5P extends PlayerCount { def value = 5 }
+//case object _6P extends PlayerCount { def value = 6 }
 
 // TODO: CardCount.+ ? CardCount.- ?
 class CardCount private (val value: Int) extends AnyVal {
