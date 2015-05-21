@@ -16,6 +16,7 @@ package object dominion {
   type CBF[-From, -Elem, +To] = scala.collection.generic.CanBuildFrom[From, Elem, To]
   type GTOnce[+A]             = scala.collection.GenTraversableOnce[A]
   type ITOnce[Repr]           = scala.collection.generic.IsTraversableOnce[Repr]
+  type Trav[+A]               = scala.collection.Traversable[A]
 
   val -> = Product2
 
