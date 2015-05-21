@@ -25,7 +25,7 @@ abstract class BasicCard   extends Card { def kind = Basic }
 abstract class KingdomCard extends Card { def kind = Kingdom ; def series: Series }
 
 abstract class TreasureCard extends BasicCard { def types = Seq(Treasure) }
-case object Copper extends TreasureCard { def series = S00Base ; def cost = 0.coins ; def value = 1.coins }
+case object Copper extends TreasureCard { def cost = 0.coins ; def value = 1.coins }
 case object Silver extends TreasureCard { def cost = 3.coins ; def value = 2.coins }
 case object Gold   extends TreasureCard { def cost = 6.coins ; def value = 3.coins }
 
