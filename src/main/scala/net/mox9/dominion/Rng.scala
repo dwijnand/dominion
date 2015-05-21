@@ -40,6 +40,8 @@ case class Rng(seed: Long) extends AnyVal {
     }
   }
 
+  def choose[A](xs0: Trav[A]): A -> Rng = xs0.toIndexedSeq pipe (xs => chooseInt(0, xs.size) mapFst xs)
+
   def shuffle[T, CC[X] <: TraversableOnce[X]](xs: CC[T])(implicit bf: CBF[CC[T], T, CC[T]]): CC[T] -> Rng = {
     val buf = new ArrayBuffer[T] ++= xs
 
