@@ -14,8 +14,10 @@ case class VPoints(value: Int) extends AnyVal {
 }
 
 // TODO: Kill PlayerCount?
-class PlayerCount private (val value: Int) extends AnyVal
-object PlayerCount {
+class PlayerCount private (val value: Int) extends AnyVal {
+  override def toString = s"$value"
+}
+object PlayerCount extends (Int => PlayerCount) {
   // TODO: Try github.com/fthomas/refined
   def apply(c: Int) = c sideEffect require(c >= 2 && c <= 4) pipe (new PlayerCount(_))
 //def apply(c: Int) = c sideEffect require(c >= 2 && c <= 6) pipe (new PlayerCount(_))
@@ -26,6 +28,6 @@ class CardCount private (val value: Int) extends AnyVal {
   override def toString = s"$value"
 //def +(cc: CardCount) = new CardCount(value + cc.value)
 }
-object CardCount {
+object CardCount extends (Int => CardCount) {
   def apply(c: Int) = c sideEffect require(c >= 0) pipe (new CardCount(_))
 }
