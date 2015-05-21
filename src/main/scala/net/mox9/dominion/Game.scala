@@ -34,16 +34,13 @@ object Game {
     implicit class CardPileToStr(cp: CardPile[Card]) {
       @inline def toStr = Vector(cp.count.toString, cp.card.toString)
     }
-    implicit class CardCountToStr(cc: CardCount) {
-      @inline def toStr(l: String) = Vector(cc.toString, l)
-    }
 
     val board =
       Vector(
-        Vector(provinces toStr "Provinces", Vector(card5, card6, card7, card8, card9) flatMap (_.toStr),   golds toStr "Gold"  ).flatten,
-        Vector(  duchies toStr "Duchy"    , Vector(card0, card1, card2, card3, card4) flatMap (_.toStr), silvers toStr "Silver").flatten,
-        Vector(  estates toStr "Estate"   , Vector.fill(10)(""),                                         coppers toStr "Copper").flatten,
-        Vector(   curses toStr "Curse"    , Vector.fill(12)("")                                                                ).flatten
+        Vector(provinces.toStr, Vector(card5, card6, card7, card8, card9) flatMap (_.toStr),   golds.toStr).flatten,
+        Vector(  duchies.toStr, Vector(card0, card1, card2, card3, card4) flatMap (_.toStr), silvers.toStr).flatten,
+        Vector(  estates.toStr, Vector.fill(10)(""),                                         coppers.toStr).flatten,
+        Vector(   curses.toStr, Vector.fill(12)("")                                                       ).flatten
       ) filter (_.nonEmpty)
 
     val values = board

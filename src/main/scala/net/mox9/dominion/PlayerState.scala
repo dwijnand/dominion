@@ -21,10 +21,10 @@ class CardPile[+T <: Card](val card: T, val count: CardCount) {
 }
 
 class Supply private (
-  val coppers : CardCount,   val silvers : CardCount,   val golds     : CardCount,
-  val estates : CardCount,   val duchies : CardCount,   val provinces : CardCount,
+  val coppers : CardPile[Copper.type],   val silvers : CardPile[Silver.type],   val golds     : CardPile[Gold.type],
+  val estates : CardPile[Estate.type],   val duchies : CardPile[Duchy.type],    val provinces : CardPile[Province.type],
 
-  val curses: CardCount,
+  val curses: CardPile[Curse.type],
 
   val card0: CardPile[KingdomCard], val card1: CardPile[KingdomCard], val card2: CardPile[KingdomCard],
   val card3: CardPile[KingdomCard], val card4: CardPile[KingdomCard], val card5: CardPile[KingdomCard],
@@ -47,15 +47,19 @@ object Supply {
     6 players:  12 Estate  12 Duchy  18 Province
      */
 
-    val vcCount = (if (playerCount.value == 2) 8 else 12).cards
+    val vcCount = if (playerCount.value == 2) 8 else 12
 
-    def newPile(kc: KingdomCard) = new CardPile(kc, if (kc.types.contains(Victory)) vcCount else 10.cards)
+    implicit class IntToPile(x: Int) {
+      @inline def *[C <: Card](c: C) = new CardPile[C](c, x.cards)
+    }
+
+    def newPile(kc: KingdomCard) = (if (kc.types.contains(Victory)) vcCount else 10) * kc
 
     new Supply (
-      coppers = 60.cards,   silvers = 40.cards,   golds     = 30.cards,
-      estates = vcCount,    duchies = vcCount,    provinces = vcCount,
+      coppers = 60 * Copper,        silvers = 40 * Silver,       golds = 30 * Gold,
+      estates = vcCount * Estate,   duchies = vcCount * Duchy,   provinces = vcCount * Province,
 
-      curses = ((playerCount.value - 1) * 10).cards,
+      curses = ((playerCount.value - 1) * 10) * Curse,
 
       card0 = newPile(card0), card1 = newPile(card1), card2 = newPile(card2), card3 = newPile(card3),
       card4 = newPile(card4), card5 = newPile(card5), card6 = newPile(card6), card7 = newPile(card7),
