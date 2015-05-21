@@ -21,8 +21,8 @@ class CardPile[+T <: Card](val card: T, val count: CardCount) {
 }
 
 class Supply private (
-  val coppers : CardCount,   val silvers  : CardCount,   val golds     : CardCount,
-  val estates : CardCount,   val dutchies : CardCount,   val provinces : CardCount,
+  val coppers : CardCount,   val silvers : CardCount,   val golds     : CardCount,
+  val estates : CardCount,   val duchies : CardCount,   val provinces : CardCount,
 
   val curses: CardCount,
 
@@ -40,11 +40,11 @@ object Supply {
     // TODO: Additional cards from other series
     // TODO: Province start: 5p -> 15, 6p -> 18
     /*
-    2 players:  08 Estate  08 Dutchy  08 Province
-    3 players:  12 Estate  12 Dutchy  12 Province
-    4 players:  12 Estate  12 Dutchy  12 Province
-    5 players:  12 Estate  12 Dutchy  15 Province
-    6 players:  12 Estate  12 Dutchy  18 Province
+    2 players:  08 Estate  08 Duchy  08 Province
+    3 players:  12 Estate  12 Duchy  12 Province
+    4 players:  12 Estate  12 Duchy  12 Province
+    5 players:  12 Estate  12 Duchy  15 Province
+    6 players:  12 Estate  12 Duchy  18 Province
      */
 
     val vcCount = (if (playerCount.value == 2) 8 else 12).cards
@@ -52,8 +52,8 @@ object Supply {
     def newPile(kc: KingdomCard) = new CardPile(kc, if (kc.types.contains(Victory)) vcCount else 10.cards)
 
     new Supply (
-      coppers = 60.cards,   silvers  = 40.cards,   golds     = 30.cards,
-      estates = vcCount,    dutchies = vcCount,    provinces = vcCount,
+      coppers = 60.cards,   silvers = 40.cards,   golds     = 30.cards,
+      estates = vcCount,    duchies = vcCount,    provinces = vcCount,
 
       curses = ((playerCount.value - 1) * 10).cards,
 

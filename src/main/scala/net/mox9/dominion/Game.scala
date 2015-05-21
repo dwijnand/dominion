@@ -48,7 +48,7 @@ object Game {
     val board =
       Vector(
         Vector(Vector(provinces.toString, "Provinces"), cardsRows.getOrElse(0, vecZ), Vector(  golds.toString, "Gold"  )).flatten,
-        Vector(Vector( dutchies.toString, "Dutchy"   ), cardsRows.getOrElse(1, vecZ), Vector(silvers.toString, "Silver")).flatten,
+        Vector(Vector(  duchies.toString, "Duchy"    ), cardsRows.getOrElse(1, vecZ), Vector(silvers.toString, "Silver")).flatten,
         Vector(Vector(  estates.toString, "Estate"   ), cardsRows.getOrElse(2, vecZ), Vector(coppers.toString, "Copper")).flatten,
         Vector(Vector(   curses.toString, "Curse"    ), cardsRows.getOrElse(3, vecZ), Vector(              "", ""      )).flatten,
                                                         cardsRows.get(4).fold(vecZ[String])(cards => Vector("", "") ++: cards ++: Vector("", ""))
