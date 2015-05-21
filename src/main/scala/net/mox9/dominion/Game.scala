@@ -20,22 +20,7 @@ object Game {
   def showSupply(supply: Supply): Unit = {
     import supply._
 
-    val cards        = Vector(card0, card1, card2, card3, card4, card5, card6, card7, card8, card9)
-    val cardCosts    = 6 to 2 by -1 map (_.coins) toVector
-    val cardsByCount = cardCosts map (count => cards filter (_.card.cost == count)) filter (_.nonEmpty)
-    def cpToStr(cp: CardPile[Card]) = Vector(cp.count.toString, cp.card.toString)
-    val cardsRows =
-      cardsByCount flatMap (_ grouped 3) map {
-        case Vector(cp)            => Vector(Vector("", ""), cpToStr(cp),  Vector("", "")).flatten
-        case Vector(cp1, cp2)      => Vector(cpToStr(cp1),   cpToStr(cp2), Vector("", "")).flatten
-        case Vector(cp1, cp2, cp3) => Vector(cpToStr(cp1),   cpToStr(cp2), cpToStr(cp3)  ).flatten
-      }
-
     // PhilosophersStone is 17 chars
-    val trueCardOrder = Vector(
-      Vector(card5, card6, card7, card8, card9),
-      Vector(card0, card1, card2, card3, card4)
-    )
 
     /*
     Actions: 01
@@ -46,19 +31,25 @@ object Game {
     // End Turn
     // Player Treasures
 
+    implicit class CardPileToStr(cp: CardPile[Card]) {
+      @inline def toStr = Vector(cp.count.toString, cp.card.toString)
+    }
+    implicit class CardCountToStr(cc: CardCount) {
+      @inline def toStr(l: String) = Vector(cc.toString, l)
+    }
+
     val board =
       Vector(
-        Vector(Vector(provinces.toString, "Provinces"), cardsRows.getOrElse(0, vecZ), Vector(  golds.toString, "Gold"  )).flatten,
-        Vector(Vector(  duchies.toString, "Duchy"    ), cardsRows.getOrElse(1, vecZ), Vector(silvers.toString, "Silver")).flatten,
-        Vector(Vector(  estates.toString, "Estate"   ), cardsRows.getOrElse(2, vecZ), Vector(coppers.toString, "Copper")).flatten,
-        Vector(Vector(   curses.toString, "Curse"    ), cardsRows.getOrElse(3, vecZ), Vector(              "", ""      )).flatten,
-                                                        cardsRows.get(4).fold(vecZ[String])(cards => Vector("", "") ++: cards ++: Vector("", ""))
+        Vector(provinces toStr "Provinces", Vector(card5, card6, card7, card8, card9) flatMap (_.toStr),   golds toStr "Gold"  ).flatten,
+        Vector(  duchies toStr "Duchy"    , Vector(card0, card1, card2, card3, card4) flatMap (_.toStr), silvers toStr "Silver").flatten,
+        Vector(  estates toStr "Estate"   , Vector.fill(10)(""),                                         coppers toStr "Copper").flatten,
+        Vector(   curses toStr "Curse"    , Vector.fill(12)("")                                                                ).flatten
       ) filter (_.nonEmpty)
 
     val values = board
-    val functions = (0 until 10).toVector map (idx => { xs: Seq[String] => xs(idx) })
+    val functions = (0 until 14).toVector map (idx => { xs: Seq[String] => xs(idx) })
     val cardFormat = "%%%ss %%-%ss"
-    val format = s"$cardFormat    $cardFormat  $cardFormat  $cardFormat    $cardFormat"
+    val format = s"$cardFormat    $cardFormat  $cardFormat  $cardFormat  $cardFormat  $cardFormat    $cardFormat"
 
     def rows = values map (x => functions map (f => f(x)))
     def cols = functions map (f => values map (x => f(x)))
