@@ -1,6 +1,7 @@
 package net.mox9
 
 import scala.language.implicitConversions
+import scala.language.higherKinds
 
 package object dominion {
   type AtomicLong = java.util.concurrent.atomic.AtomicLong
@@ -13,6 +14,8 @@ package object dominion {
   type \/[+A, +B]             = scala.util.Either[A, B]
   type Ordering[A]            = scala.math.Ordering[A]
   type CBF[-From, -Elem, +To] = scala.collection.generic.CanBuildFrom[From, Elem, To]
+  type GTOnce[+A]             = scala.collection.GenTraversableOnce[A]
+  type ITOnce[Repr]           = scala.collection.generic.IsTraversableOnce[Repr]
 
   val -> = Product2
 
