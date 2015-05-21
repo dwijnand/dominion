@@ -31,7 +31,7 @@ case object Gold   extends TreasureCard { def cost = 6.coins ; def value = 3.coi
 
 sealed abstract class VictoryCard extends BasicCard { def types = Seq(Victory) }
 case object Estate   extends VictoryCard { def cost = 2.coins ; def value = 1.vps }
-case object Dutchy   extends VictoryCard { def cost = 5.coins ; def value = 3.vps }
+case object Duchy    extends VictoryCard { def cost = 5.coins ; def value = 3.vps }
 case object Province extends VictoryCard { def cost = 8.coins ; def value = 6.vps }
 
 // TODO: "types = Seq(this)" insane?
