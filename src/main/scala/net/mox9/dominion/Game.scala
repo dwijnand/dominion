@@ -46,18 +46,15 @@ object Game {
         Vector(   curses.toStr, Vector.fill(11)(""),                                           trash.toStr).flatten
       ) filter (_.nonEmpty)
 
-    val values = board
-    val functions = (0 until 14).toVector map (idx => { xs: Seq[String] => xs(idx) })
     val cardFormat = "%%%ss %%-%ss"
     val format = s"$cardFormat    $cardFormat  $cardFormat  $cardFormat  $cardFormat  $cardFormat    $cardFormat"
 
-    def rows = values map (x => functions map (f => f(x)))
-    def cols = functions map (f => values map (x => f(x)))
-    def renderLines = {
-      def widths = cols map (_ map (_.length) max)
-      val rowFormat = format format (widths: _*)
-      rows map (row => rowFormat format (row: _*))
-    }
+    val colCount = board.maxBy(_.length).length
+    val cols = (0 until colCount).toVector map (idx => board map (row => row(idx)))
+    val widths = cols map (_ map (_.length) max)
+    val rowFormat = format format (widths: _*)
+    val renderLines = board map (row => rowFormat format (row: _*))
+
     val s = renderLines mkString "\n"
     println(s)
     ()
