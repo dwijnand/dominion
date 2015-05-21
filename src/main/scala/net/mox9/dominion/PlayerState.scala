@@ -20,11 +20,13 @@ class CardPile[+T <: Card](val card: T, val count: CardCount) {
 //def inc = new CardPile[T](card, count + 1.cards)
 }
 
+case class Trash(cards: List[Card]) extends AnyVal
+
 class Supply private (
   val coppers : CardPile[Copper.type],   val silvers : CardPile[Silver.type],   val golds     : CardPile[Gold.type],
   val estates : CardPile[Estate.type],   val duchies : CardPile[Duchy.type],    val provinces : CardPile[Province.type],
 
-  val curses: CardPile[Curse.type],
+  val curses: CardPile[Curse.type],   val trash: Trash,
 
   val card0: CardPile[KingdomCard], val card1: CardPile[KingdomCard], val card2: CardPile[KingdomCard],
   val card3: CardPile[KingdomCard], val card4: CardPile[KingdomCard], val card5: CardPile[KingdomCard],
@@ -59,7 +61,7 @@ object Supply {
       coppers = 60 * Copper,        silvers = 40 * Silver,       golds = 30 * Gold,
       estates = vcCount * Estate,   duchies = vcCount * Duchy,   provinces = vcCount * Province,
 
-      curses = ((playerCount.value - 1) * 10) * Curse,
+      curses = ((playerCount.value - 1) * 10) * Curse,   trash = Trash(Nil),
 
       card0 = newPile(card0), card1 = newPile(card1), card2 = newPile(card2), card3 = newPile(card3),
       card4 = newPile(card4), card5 = newPile(card5), card6 = newPile(card6), card7 = newPile(card7),
