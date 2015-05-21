@@ -21,6 +21,7 @@ package object dominion {
   val -> = Product2
 
   @inline def classTag[T: CTag]: CTag[T] = implicitly[CTag[T]]
+  @inline def id[A](x: A): A             = x
 
   @inline def nanoTime: Long = java.lang.System.nanoTime
 
