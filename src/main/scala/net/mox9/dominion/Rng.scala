@@ -1,12 +1,13 @@
 package net.mox9.dominion
 
-import scala.language.higherKinds
-
 import scala.collection.mutable.ArrayBuffer
 
 case class Rng(seed: Long) extends AnyVal {
+  private val multiplier = 0x5DEECE66DL
+  private val increment = 0xBL
+
   def nextBits(bits: Int): Int -> Rng = {
-    val newSeed = (seed * 0x5DEECE66DL + 0xBL) & 0xFFFFFFFFFFFFL
+    val newSeed = (seed * multiplier + increment) & 0xFFFFFFFFFFFFL
     (newSeed >>> (48 - bits)).toInt -> Rng(newSeed)
   }
 

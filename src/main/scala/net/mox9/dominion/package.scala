@@ -1,8 +1,5 @@
 package net.mox9
 
-import scala.language.implicitConversions
-import scala.language.higherKinds
-
 package object dominion {
   type AtomicLong = java.util.concurrent.atomic.AtomicLong
 
@@ -25,8 +22,12 @@ package object dominion {
 
   @inline def nanoTime: Long = java.lang.System.nanoTime
 
-  @inline def lalign(width: Int): String = if (width == 0) "%s" else s"%-${width}s"
-  @inline def ralign(width: Int): String = if (width == 0) "%s" else s"%${width}s"
+  implicit class IntWithAlign(private val x: Int) extends AnyVal {
+    @inline def lalign: String = if (x == 0) "%s" else s"%-${x}s"
+    @inline def ralign: String = if (x == 0) "%s" else s"%${x}s"
+  }
+  @inline def lalign(width: Int): String = width.lalign
+  @inline def ralign(width: Int): String = width.ralign
 
   //@inline def anyToStr[A](x: A): String = x.toString
 
